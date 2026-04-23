@@ -76,15 +76,15 @@ Each supplier gets a **Trust Score** based on:
 ## 📂 Folder Structure
 
 ### 📁 Frontend (Vite + React)
-
+```
 frontend/
 ├── src/
 ├── public/
 ├── index.html
 └── package.json
-
+```
 ### 📁 Backend (Node.js + Express)
-
+```
 backend/
 └── src/
 ├── controllers/
@@ -93,7 +93,7 @@ backend/
 ├── middleware/
 ├── config/
 └── server.js
-
+```
 ---
 
 ## ⚡ Getting Started
