@@ -17,6 +17,16 @@ The **Supplier Verification Platform** helps businesses make reliable decisions 
 
 ---
 
+---
+
+## 🎨 Figma Design
+
+You can view the UI/UX design of the project here:
+
+🔗 [View Figma Design](https://your-figma-link-here)
+
+---
+
 ## 🎯 Features
 
 ### 👤 Buyer Dashboard
