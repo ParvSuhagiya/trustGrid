@@ -87,12 +87,12 @@ frontend/
 ```
 backend/
 └── src/
-├── controllers/
-├── routes/
-├── models/
-├── middleware/
-├── config/
-└── server.js
+    ├── controllers/
+    ├── routes/
+    ├── models/
+    ├── middleware/
+    ├── config/
+    └── server.js
 ```
 ---
 
