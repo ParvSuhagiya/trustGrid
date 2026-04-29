@@ -9,6 +9,8 @@ const SmallRequestCard = ({
   timeAgo,
   value,
   quantity,
+  onAccept,
+  onReject,
 }) => (
   <Box
     sx={{
@@ -86,6 +88,7 @@ const SmallRequestCard = ({
     {/* Action buttons */}
     <Box sx={{ display: 'flex', gap: 1 }}>
       <Button
+        onClick={onAccept}
         sx={{
           flex: 1, py: 1,
           backgroundColor: '#fff', color: '#000',
@@ -98,6 +101,7 @@ const SmallRequestCard = ({
         Accept
       </Button>
       <Button
+        onClick={onReject}
         variant="outlined"
         sx={{
           flex: 1, py: 1,
