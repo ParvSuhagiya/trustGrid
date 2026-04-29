@@ -1,7 +1,10 @@
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { useState, useEffect } from 'react';
+import { apiFetch } from '../../utils/api';
+import { useAuth } from '../../context/AuthContext';
 
 const C = { primary: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
 
@@ -102,111 +105,141 @@ const RequestItem = ({ company, time, description, urgent, showActions }) => (
 );
 
 // --- Hero Summary (metrics + incoming requests) ---
-const HeroSummary = () => (
-  <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, mb: 6 }}>
-    {/* Left: Heading + Metric Cards */}
-    <Box sx={{ gridColumn: { xs: 'span 12', lg: 'span 8' } }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mb: 4 }}>
-        <Typography
-          sx={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 700,
-            fontSize: '0.75rem', textTransform: 'uppercase',
-            letterSpacing: '0.1em', color: C.muted,
-          }}
-        >
-          PERFORMANCE OVERVIEW
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: "'Manrope', sans-serif", fontWeight: 700,
-            fontSize: '2.25rem', letterSpacing: '-0.025em', color: '#fff',
-          }}
-        >
-          Welcome back, Rivera.
-        </Typography>
-      </Box>
+const HeroSummary = () => {
+  const { user } = useAuth();
+  const [metrics, setMetrics] = useState(null);
+  const [requests, setRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-      {/* 3-column metric bento */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3 }}>
-        <MetricCard
-          icon={<Inventory2Icon />}
-          badge="+12.5%"
-          label="TOTAL SUPPLIES"
-          value="1,284"
-          subtext="ACTIVE SKUS ACROSS 4 REGIONS"
-        />
-        <MetricCard
-          icon={<PaymentsIcon />}
-          label="REVENUE (MTD)"
-          value="$42.8k"
-          subtext="84% OF QUARTERLY TARGET MET"
-        />
-        <MetricCard
-          icon={<VerifiedIcon />}
-          label="FULFILLMENT RATE"
-          value="99.2%"
-          subtext="TOP 5% OF MARKETPLACE SUPPLIERS"
-        />
-      </Box>
-    </Box>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [metricsData, requestsData] = await Promise.all([
+          apiFetch('/api/supplier/dashboard/metrics'),
+          apiFetch('/api/supplier/requests')
+        ]);
+        setMetrics(metricsData);
+        setRequests(requestsData.slice(0, 2)); // Only keep the top 2 for the overview
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
-    {/* Right: Incoming Requests */}
-    <Box sx={{ gridColumn: { xs: 'span 12', lg: 'span 4' } }}>
-      <Box
-        sx={{
-          backgroundColor: '#000', height: '100%', borderRadius: '10px',
-          p: 3, border: `1px solid ${C.outline}`, display: 'flex', flexDirection: 'column',
-        }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+  if (loading) {
+    return <Box sx={{ display: 'flex', justifyContent: 'center', p: 8 }}><CircularProgress color="success" /></Box>;
+  }
+
+  return (
+    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 3, mb: 6 }}>
+      {/* Left: Heading + Metric Cards */}
+      <Box sx={{ gridColumn: { xs: 'span 12', lg: 'span 8' } }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, mb: 4 }}>
           <Typography
             sx={{
               fontFamily: "'Manrope', sans-serif", fontWeight: 700,
-              fontSize: '1.125rem', color: '#fff', textTransform: 'uppercase',
+              fontSize: '0.75rem', textTransform: 'uppercase',
+              letterSpacing: '0.1em', color: C.muted,
             }}
           >
-            INCOMING REQUESTS
+            PERFORMANCE OVERVIEW
           </Typography>
           <Typography
             sx={{
-              backgroundColor: C.primary, color: '#000',
-              fontSize: '0.625rem', fontWeight: 700,
-              px: 1, py: 0.25, borderRadius: '4px',
+              fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+              fontSize: '2.25rem', letterSpacing: '-0.025em', color: '#fff',
             }}
           >
-            NEW
+            Welcome back, {user?.name || 'Supplier'}.
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
-          <RequestItem
-            company="Industrial Hub GMBH"
-            time="2m ago"
-            description="Bulk order: Grade-A Lithium Cells (500 units)"
-            showActions
+        {/* 3-column metric bento */}
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3 }}>
+          <MetricCard
+            icon={<Inventory2Icon />}
+            badge={metrics?.totalReceived > 0 ? "LIVE" : null}
+            label="MARKETPLACE OPPORTUNITIES"
+            value={metrics?.totalReceived || 0}
+            subtext="TOTAL ACTIVE REQUESTS"
           />
-          <RequestItem
-            company="AeroSystems Inc."
-            time="1h ago"
-            description="Quote Request: Titanium Fasteners"
-            urgent
+          <MetricCard
+            icon={<PaymentsIcon />}
+            label="TOTAL EARNINGS"
+            value={`$${metrics?.totalEarnings?.toLocaleString() || 0}`}
+            subtext="LIFETIME COMPLETED DEALS"
+          />
+          <MetricCard
+            icon={<VerifiedIcon />}
+            label="ACTIVE DEALS"
+            value={metrics?.acceptedRequests || 0}
+            subtext="REQUESTS CURRENTLY IN PROGRESS"
           />
         </Box>
+      </Box>
 
-        <Button
-          fullWidth
+      {/* Right: Incoming Requests */}
+      <Box sx={{ gridColumn: { xs: 'span 12', lg: 'span 4' } }}>
+        <Box
           sx={{
-            mt: 3, py: 1, border: `1px solid ${C.outline}`, borderRadius: '8px',
-            fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: '0.1em', color: C.muted,
-            '&:hover': { color: '#fff', borderColor: '#fff' },
+            backgroundColor: '#000', height: '100%', borderRadius: '10px',
+            p: 3, border: `1px solid ${C.outline}`, display: 'flex', flexDirection: 'column',
           }}
         >
-          VIEW ALL REQUESTS (14)
-        </Button>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+            <Typography
+              sx={{
+                fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+                fontSize: '1.125rem', color: '#fff', textTransform: 'uppercase',
+              }}
+            >
+              INCOMING REQUESTS
+            </Typography>
+            <Typography
+              sx={{
+                backgroundColor: C.primary, color: '#000',
+                fontSize: '0.625rem', fontWeight: 700,
+                px: 1, py: 0.25, borderRadius: '4px',
+              }}
+            >
+              NEW
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
+            {requests.length > 0 ? requests.map((req, idx) => (
+              <RequestItem
+                key={req._id}
+                company={req.buyerId?.name || 'Buyer'}
+                time={new Date(req.createdAt).toLocaleDateString()}
+                description={`${req.quantity} units of ${req.productName}`}
+                showActions={idx === 0}
+                urgent={req.budget > 100000}
+              />
+            )) : (
+              <Typography sx={{ color: C.muted, fontSize: '0.875rem' }}>No new incoming requests right now.</Typography>
+            )}
+          </Box>
+
+          <Button
+            fullWidth
+            href="/supplier-dashboard/orders"
+            sx={{
+              mt: 3, py: 1, border: `1px solid ${C.outline}`, borderRadius: '8px',
+              fontSize: '0.625rem', fontWeight: 700, textTransform: 'uppercase',
+              letterSpacing: '0.1em', color: C.muted,
+              '&:hover': { color: '#fff', borderColor: '#fff' },
+            }}
+          >
+            VIEW ALL REQUESTS
+          </Button>
+        </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 export default HeroSummary;

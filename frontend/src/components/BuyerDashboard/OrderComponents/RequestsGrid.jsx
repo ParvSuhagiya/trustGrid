@@ -15,17 +15,18 @@ const RequestsGrid = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchRequests = async () => {
+    try {
+      const data = await apiFetch('/api/requests');
+      setRequests(data);
+    } catch (error) {
+      console.error('Failed to fetch requests', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const data = await apiFetch('/api/requests');
-        setRequests(data);
-      } catch (error) {
-        console.error('Failed to fetch requests', error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchRequests();
   }, []);
 
@@ -61,7 +62,7 @@ const RequestsGrid = () => {
 
       {/* CTA card always last */}
       <Grid item xs={12} md={6} xl={4}>
-        <NewRequestCard />
+        <NewRequestCard onSuccess={fetchRequests} />
       </Grid>
     </Grid>
   );
