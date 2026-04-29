@@ -16,14 +16,12 @@ const navItems = [
   { icon: <DashboardIcon sx={{ fontSize: '1.2rem' }} />, label: 'DASHBOARD', to: '/supplier-dashboard' },
   { icon: <StorefrontIcon sx={{ fontSize: '1.2rem' }} />, label: 'MARKETPLACE', to: '/supplier-dashboard/marketplace' },
   { icon: <ShoppingCartIcon sx={{ fontSize: '1.2rem' }} />, label: 'ORDERS', to: '/supplier-dashboard/orders' },
-  { icon: <Inventory2Icon sx={{ fontSize: '1.2rem' }} />, label: 'INVENTORY', to: '/supplier-dashboard/inventory' },
-  { icon: <ChatIcon sx={{ fontSize: '1.2rem' }} />, label: 'MESSAGES', to: '#' },
-  { icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />, label: 'ANALYTICS', to: '#' },
+  { icon: <Inventory2Icon sx={{ fontSize: '1.2rem' }} />, label: 'INVENTORY', to: '/supplier-dashboard/inventory' }
 ];
 
 const bottomItems = [
-  { icon: <SettingsIcon sx={{ fontSize: '1.2rem' }} />, label: 'SETTINGS', to: '#' },
-  { icon: <ContactSupportIcon sx={{ fontSize: '1.2rem' }} />, label: 'SUPPORT', to: '#' },
+  { icon: <SettingsIcon sx={{ fontSize: '1.2rem' }} />, label: 'SETTINGS', to: '' },
+  { icon: <ContactSupportIcon sx={{ fontSize: '1.2rem' }} />, label: 'SUPPORT', to: '' },
 ];
 
 // Static layout styles shared by all nav items
