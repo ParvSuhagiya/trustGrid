@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -10,22 +10,42 @@ import {
   InputAdornment,
   IconButton,
   Stack,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useAuth } from '../context/AuthContext';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: wire up authentication logic
-    console.log('Login submitted:', formData);
+    setError(null);
+    setIsSubmitting(true);
+    
+    try {
+      const user = await login(formData.email, formData.password);
+      if (user.role === 'buyer') {
+        navigate('/buyer-dashboard');
+      } else {
+        navigate('/supplier-dashboard');
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to login. Please check credentials.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -64,6 +84,11 @@ const LoginForm = () => {
 
       {/* ── Login Form ── */}
       <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
         <Stack spacing={2.5}>
           {/* Email */}
           <TextField
@@ -147,13 +172,14 @@ const LoginForm = () => {
             variant="contained"
             size="large"
             fullWidth
+            disabled={isSubmitting}
             sx={{
               py: 1.75,
               fontSize: '0.7rem',
               letterSpacing: '0.15em',
             }}
           >
-            Login
+            {isSubmitting ? <CircularProgress size={24} /> : 'Login'}
           </Button>
 
           {/* Divider */}
