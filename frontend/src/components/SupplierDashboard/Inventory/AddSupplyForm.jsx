@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Typography, Button, TextField, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Box, Typography, Button, TextField, Select, MenuItem, FormControl } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import InventoryIcon from '@mui/icons-material/Inventory';
 

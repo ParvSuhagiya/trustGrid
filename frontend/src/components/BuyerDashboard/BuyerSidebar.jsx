@@ -15,10 +15,7 @@ const C = { primary: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
 const navItems = [
   { icon: <DashboardIcon sx={{ fontSize: '1.2rem' }} />, label: 'Dashboard', to: '/buyer-dashboard', end: true },
   { icon: <StorefrontIcon sx={{ fontSize: '1.2rem' }} />, label: 'Marketplace', to: '/buyer-dashboard/marketplace' },
-  { icon: <ShoppingCartIcon sx={{ fontSize: '1.2rem' }} />, label: 'Orders', to: '/buyer-dashboard/orders' },
-  { icon: <InventoryIcon sx={{ fontSize: '1.2rem' }} />, label: 'Inventory', to: null },
-  { icon: <ChatIcon sx={{ fontSize: '1.2rem' }} />, label: 'Messages', to: null },
-  { icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />, label: 'Analytics', to: null },
+  { icon: <ShoppingCartIcon sx={{ fontSize: '1.2rem' }} />, label: 'Orders', to: '/buyer-dashboard/orders' }
 ];
 
 const bottomItems = [

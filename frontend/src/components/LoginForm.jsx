@@ -10,11 +10,9 @@ import {
   InputAdornment,
   IconButton,
   Stack,
-  Grid,
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import TerminalIcon from '@mui/icons-material/Terminal';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
