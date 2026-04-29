@@ -79,7 +79,7 @@ const SupplierProfilePage = () => {
       </Button>
 
       {/* ── Hero: logo, name, tagline, CTA buttons ── */}
-      <SupplierProfileHero supplier={supplier} />
+      <SupplierProfileHero supplier={supplier} supplierSlug={supplierId} />
 
       {/* ── Stats & Performance Metrics ── */}
       <SupplierStatsRating stats={supplier.stats} />
