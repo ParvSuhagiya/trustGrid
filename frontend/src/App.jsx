@@ -6,7 +6,11 @@ import BuyerDashboardLayout from './layouts/BuyerDashboardLayout'
 import BuyerDashboardHome from './pages/BuyerDashboardHome'
 import BuyerMarketplace from './pages/BuyerMarketplace'
 import BuyerOrders from './pages/BuyerOrders'
-import SupplierDashboard from './pages/SupplierDashboard'
+import RateSupplierPage from './pages/RateSupplierPage'
+import SupplierDashboardLayout from './layouts/SupplierDashboardLayout'
+import SupplierDashboardHome from './pages/SupplierDashboardHome'
+import SupplierMarketplace from './pages/SupplierMarketplace'
+import SupplierBuyerRequests from './pages/SupplierBuyerRequests'
 import SupplierProfilePage from './pages/SupplierProfilePage'
 
 function App() {
@@ -23,9 +27,15 @@ function App() {
           <Route path="marketplace" element={<BuyerMarketplace />} />
           <Route path="marketplace/:supplierId" element={<SupplierProfilePage />} />
           <Route path="orders" element={<BuyerOrders />} />
+          <Route path="marketplace/:supplierId/rate" element={<RateSupplierPage />} />
         </Route>
 
-        <Route path="/supplier-dashboard" element={<SupplierDashboard />} />
+        {/* Supplier Dashboard — nested layout with shared sidebar + topbar */}
+        <Route path="/supplier-dashboard" element={<SupplierDashboardLayout />}>
+          <Route index element={<SupplierDashboardHome />} />
+          <Route path="marketplace" element={<SupplierMarketplace />} />
+          <Route path="orders" element={<SupplierBuyerRequests />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
