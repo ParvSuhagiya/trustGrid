@@ -11,6 +11,7 @@ import SupplierDashboardLayout from './layouts/SupplierDashboardLayout'
 import SupplierDashboardHome from './pages/SupplierDashboardHome'
 import SupplierMarketplace from './pages/SupplierMarketplace'
 import SupplierBuyerRequests from './pages/SupplierBuyerRequests'
+import SupplierInventory from './pages/SupplierInventory'
 import SupplierProfilePage from './pages/SupplierProfilePage'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route index element={<SupplierDashboardHome />} />
           <Route path="marketplace" element={<SupplierMarketplace />} />
           <Route path="orders" element={<SupplierBuyerRequests />} />
+          <Route path="inventory" element={<SupplierInventory />} />
         </Route>
       </Routes>
     </BrowserRouter>
