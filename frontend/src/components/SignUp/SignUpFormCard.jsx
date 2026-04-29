@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -9,10 +9,13 @@ import {
   InputAdornment,
   IconButton,
   Stack,
+  Alert,
+  CircularProgress
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import RoleToggle from './RoleToggle';
+import { useAuth } from '../../context/AuthContext';
 
 /**
  * Main sign-up form card.
@@ -22,13 +25,32 @@ const SignUpFormCard = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedRole, setSelectedRole] = useState('Buyer');
   const [formData, setFormData] = useState({ fullName: '', email: '', password: '' });
+  const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('SignUp submitted:', { ...formData, role: selectedRole });
+    setError(null);
+    setIsSubmitting(true);
+    
+    try {
+      const role = selectedRole.toLowerCase();
+      const user = await register(formData.fullName, formData.email, formData.password, role);
+      if (user.role === 'buyer') {
+        navigate('/buyer-dashboard');
+      } else {
+        navigate('/supplier-dashboard');
+      }
+    } catch (err) {
+      setError(err.message || 'Failed to create account. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /* ── Shared label styles ── */
@@ -101,6 +123,11 @@ const SignUpFormCard = () => {
 
       {/* ── Form ── */}
       <Box component="form" onSubmit={handleSubmit} noValidate>
+        {error && (
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+        )}
         <Stack spacing={3}>
 
           {/* Full Name */}
@@ -187,6 +214,7 @@ const SignUpFormCard = () => {
             type="submit"
             variant="contained"
             fullWidth
+            disabled={isSubmitting}
             sx={{
               mt: 1,
               py: 1.875,                           // py-4 ≈ 15px
@@ -204,7 +232,7 @@ const SignUpFormCard = () => {
               '&:active': { transform: 'scale(0.98)' },
             }}
           >
-            Signup
+            {isSubmitting ? <CircularProgress size={24} /> : 'Signup'}
           </Button>
         </Stack>
       </Box>
