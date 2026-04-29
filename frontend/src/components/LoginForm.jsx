@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -172,7 +173,8 @@ const LoginForm = () => {
         <Typography variant="body2" color="text.secondary">
           Don&apos;t have an account?{' '}
           <Link
-            href="#"
+            component={RouterLink}
+            to="/signup"
             underline="hover"
             sx={{
               color: 'primary.main',

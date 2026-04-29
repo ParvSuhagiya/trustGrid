@@ -1,4 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -12,34 +13,42 @@ import AddIcon from '@mui/icons-material/Add';
 const C = { primary: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
 
 const navItems = [
-  { icon: <DashboardIcon sx={{ fontSize: '1.2rem' }} />, label: 'DASHBOARD', active: true },
-  { icon: <StorefrontIcon sx={{ fontSize: '1.2rem' }} />, label: 'MARKETPLACE' },
-  { icon: <ShoppingCartIcon sx={{ fontSize: '1.2rem' }} />, label: 'ORDERS' },
-  { icon: <Inventory2Icon sx={{ fontSize: '1.2rem' }} />, label: 'INVENTORY' },
-  { icon: <ChatIcon sx={{ fontSize: '1.2rem' }} />, label: 'MESSAGES' },
-  { icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />, label: 'ANALYTICS' },
+  { icon: <DashboardIcon sx={{ fontSize: '1.2rem' }} />, label: 'DASHBOARD', to: '/supplier-dashboard' },
+  { icon: <StorefrontIcon sx={{ fontSize: '1.2rem' }} />, label: 'MARKETPLACE', to: '/supplier-dashboard/marketplace' },
+  { icon: <ShoppingCartIcon sx={{ fontSize: '1.2rem' }} />, label: 'ORDERS', to: '/supplier-dashboard/orders' },
+  { icon: <Inventory2Icon sx={{ fontSize: '1.2rem' }} />, label: 'INVENTORY', to: '/supplier-dashboard/inventory' },
+  { icon: <ChatIcon sx={{ fontSize: '1.2rem' }} />, label: 'MESSAGES', to: '#' },
+  { icon: <AnalyticsIcon sx={{ fontSize: '1.2rem' }} />, label: 'ANALYTICS', to: '#' },
 ];
 
 const bottomItems = [
-  { icon: <SettingsIcon sx={{ fontSize: '1.2rem' }} />, label: 'SETTINGS' },
-  { icon: <ContactSupportIcon sx={{ fontSize: '1.2rem' }} />, label: 'SUPPORT' },
+  { icon: <SettingsIcon sx={{ fontSize: '1.2rem' }} />, label: 'SETTINGS', to: '#' },
+  { icon: <ContactSupportIcon sx={{ fontSize: '1.2rem' }} />, label: 'SUPPORT', to: '#' },
 ];
 
-const NavItem = ({ icon, label, active }) => (
+// Static layout styles shared by all nav items
+const navItemBaseSx = {
+  display: 'flex', alignItems: 'center', gap: 1.5,
+  px: 2, py: 1.5, borderRadius: '8px', textDecoration: 'none',
+  fontFamily: "'Manrope', sans-serif", fontWeight: 700,
+  fontSize: '0.75rem', letterSpacing: '0.05em',
+  transition: 'all 0.2s',
+  // hover: always brighten text + subtle bg
+  '&:hover': { color: '#fff', backgroundColor: '#111111' },
+};
+
+// NavLink's `style` callback is the correct place for isActive-dependent styles
+const NavItem = ({ icon, label, to, end }) => (
   <Box
-    component="a"
-    href="#"
-    sx={{
-      display: 'flex', alignItems: 'center', gap: 1.5,
-      px: 2, py: 1.5, borderRadius: '8px', textDecoration: 'none',
-      fontFamily: "'Manrope', sans-serif", fontWeight: 700,
-      fontSize: '0.75rem', letterSpacing: '0.05em',
-      color: active ? C.primary : C.muted,
-      backgroundColor: active ? '#111111' : 'transparent',
-      borderRight: active ? `2px solid ${C.primary}` : '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { color: active ? C.primary : '#fff', backgroundColor: active ? '#111111' : '#111111' },
-    }}
+    component={NavLink}
+    to={to}
+    end={end}
+    sx={navItemBaseSx}
+    style={({ isActive }) => ({
+      color: isActive ? C.primary : C.muted,
+      backgroundColor: isActive ? '#111111' : 'transparent',
+      borderRight: isActive ? `2px solid ${C.primary}` : '2px solid transparent',
+    })}
   >
     {icon}
     {label}
@@ -96,7 +105,7 @@ const SupplierSidebar = () => (
     {/* Nav Items */}
     <Box component="nav" sx={{ flex: 1, px: 1.5, mt: 3, display: 'flex', flexDirection: 'column', gap: 0.25 }}>
       {navItems.map((item) => (
-        <NavItem key={item.label} {...item} />
+        <NavItem key={item.label} {...item} end={item.to === '/supplier-dashboard'} />
       ))}
     </Box>
 
