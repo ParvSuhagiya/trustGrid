@@ -1,9 +1,11 @@
 import { Box, Typography, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import StarIcon from '@mui/icons-material/Star';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { nameToSlug } from '../../data/supplierData';
 
 const C = { accent: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
 
@@ -58,12 +60,21 @@ const supplierCards = [
 ];
 
 /** Individual supplier card */
-const SupplierCard = ({ img, alt, badge, category, name, rating, description, footer }) => (
+const SupplierCard = ({ img, alt, badge, category, name, rating, description, footer }) => {
+  const navigate = useNavigate();
+  const slug = nameToSlug(name);
+  const handleClick = () => navigate(`/buyer-dashboard/marketplace/${slug}`);
+
+  return (
   <Box
+    onClick={handleClick}
     sx={{
       backgroundColor: '#000', border: `1px solid ${C.outline}`,
       borderRadius: '10px', overflow: 'hidden',
       display: 'flex', flexDirection: 'column',
+      cursor: 'pointer',
+      transition: 'border-color 0.25s',
+      '&:hover': { borderColor: '#666' },
       '&:hover .card-img': { transform: 'scale(1.1)' },
     }}
   >
@@ -182,6 +193,7 @@ const SupplierCard = ({ img, alt, badge, category, name, rating, description, fo
         {/* View Profile button */}
         <Button
           endIcon={<ArrowForwardIcon sx={{ fontSize: '0.875rem !important', transition: 'transform 0.2s' }} />}
+          onClick={(e) => { e.stopPropagation(); handleClick(); }}
           sx={{
             color: '#fff', fontWeight: 700, fontSize: '0.875rem',
             textTransform: 'none', p: 0, minWidth: 0,
@@ -193,7 +205,8 @@ const SupplierCard = ({ img, alt, badge, category, name, rating, description, fo
       </Box>
     </Box>
   </Box>
-);
+  );
+};
 
 /** Ghost "Can't find a supplier?" card */
 const GhostCard = () => (

@@ -1,4 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const C = { accent: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
 
@@ -7,7 +8,8 @@ const C = { accent: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
  * Renders the top hero section: supplier logo image, name, ID, description,
  * and the CTA action buttons (Request Supply / Rate Supplier).
  */
-const SupplierProfileHero = ({ supplier }) => {
+const SupplierProfileHero = ({ supplier, supplierSlug }) => {
+  const navigate = useNavigate();
   const {
     logoUrl,
     name,
@@ -126,6 +128,7 @@ const SupplierProfileHero = ({ supplier }) => {
         <Button
           fullWidth
           variant="outlined"
+          onClick={() => navigate(`/buyer-dashboard/marketplace/${supplierSlug}/rate`)}
           sx={{
             py: 2, border: `1px solid ${C.outline}`,
             color: '#fff', fontFamily: "'Manrope', sans-serif",
