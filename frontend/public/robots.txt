@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /signup
+
+# Block private dashboard routes
+Disallow: /buyer-dashboard/
+Disallow: /supplier-dashboard/
+
+# Block API routes
+Disallow: /api/
+
+# Specify sitemap location
+Sitemap: https://trust-grid.vercel.app/sitemap.xml
