@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Supplier = require('../models/Supplier');
 const { hashPassword, verifyPassword } = require('../utils/crypto');
 const jwt = require('jsonwebtoken');
 
@@ -36,6 +37,17 @@ const signup = async (req, res) => {
       salt,
       role
     });
+
+    // If role is supplier, automatically create a default supplier profile
+    if (role === 'supplier') {
+      await Supplier.create({
+        userId: user._id,
+        name: user.name,
+        category: 'Raw Materials', // Default category
+        description: 'New supplier on TrustGrid.',
+        rating: 0
+      });
+    }
 
     // Generate JWT token
     const token = jwt.sign(
