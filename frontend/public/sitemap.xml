@@ -3,7 +3,7 @@
   
   <!-- Homepage -->
   <url>
-    <loc>https://trust-grid.vercel.app/</loc>
+    <loc>https://trust-grid-beta.vercel.app/</loc>
     <lastmod>2026-04-30T00:00:00Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -11,7 +11,7 @@
 
   <!-- Login Page -->
   <url>
-    <loc>https://trust-grid.vercel.app/login</loc>
+    <loc>https://trust-grid-beta.vercel.app/login</loc>
     <lastmod>2026-04-30T00:00:00Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -19,7 +19,7 @@
 
   <!-- Sign Up Page -->
   <url>
-    <loc>https://trust-grid.vercel.app/signup</loc>
+    <loc>https://trust-grid-beta.vercel.app/signup</loc>
     <lastmod>2026-04-30T00:00:00Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
