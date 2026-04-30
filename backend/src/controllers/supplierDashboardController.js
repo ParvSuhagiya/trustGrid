@@ -52,9 +52,17 @@ const updateProfile = async (req, res) => {
 // @access  Private (Supplier)
 const getRequests = async (req, res) => {
   try {
+    const supplier = await getSupplierProfile(req.user.userId);
     const { category, minBudget, maxBudget } = req.query;
     
-    let filter = { status: 'pending' };
+    // Filter by pending, and ONLY show marketplace requests (null) OR directed to me
+    let filter = { 
+      status: 'pending',
+      $or: [
+        { supplierId: null },
+        ...(supplier ? [{ supplierId: supplier._id }] : [])
+      ]
+    };
     
     // Allow filtering by category or budget if provided
     if (category) filter.category = category; // Note: Request model might not have category, filtering on productName if needed, or join
@@ -105,6 +113,18 @@ const acceptRequest = async (req, res) => {
     }
     if (request.status !== 'pending') {
       return res.status(400).json({ message: `Cannot accept a request with status: ${request.status}` });
+    }
+
+    // If it's linked to an inventory item, deduct the stock
+    if (request.supplyId) {
+      const supply = await mongoose.model('Supply').findById(request.supplyId);
+      if (supply) {
+        if (supply.quantity < request.quantity) {
+          return res.status(400).json({ message: 'Not enough stock in inventory to fulfill this request' });
+        }
+        supply.quantity -= request.quantity;
+        await supply.save();
+      }
     }
 
     request.status = 'accepted';

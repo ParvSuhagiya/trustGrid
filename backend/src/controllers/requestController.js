@@ -1,20 +1,38 @@
 const Request = require('../models/Request');
 const Notification = require('../models/Notification');
 const ActivityLog = require('../models/ActivityLog');
+const Supply = require('../models/Supply');
 
 // @desc    Create a new supply request
 // @route   POST /api/requests
 // @access  Private (Buyer)
 const createRequest = async (req, res) => {
   try {
-    const { supplierId, productName, quantity, budget, description } = req.body;
+    const { supplierId, supplyId, productName, quantity, budget, description } = req.body;
+
+    let finalBudget = budget;
+    let finalProductName = productName;
+
+    // If a specific supply item is targeted, validate and calculate
+    if (supplyId) {
+      const supply = await Supply.findById(supplyId);
+      if (!supply) {
+        return res.status(404).json({ message: 'Requested inventory item not found' });
+      }
+      if (quantity > supply.quantity) {
+        return res.status(400).json({ message: `Requested quantity exceeds available stock (${supply.quantity})` });
+      }
+      finalBudget = quantity * supply.price;
+      finalProductName = supply.productName;
+    }
 
     const request = new Request({
       buyerId: req.user.userId,
       supplierId: supplierId || null,
-      productName,
+      supplyId: supplyId || null,
+      productName: finalProductName,
       quantity,
-      budget,
+      budget: finalBudget,
       description
     });
 
@@ -23,13 +41,13 @@ const createRequest = async (req, res) => {
     // Log Activity
     await ActivityLog.create({
       userId: req.user.userId,
-      action: `Created a supply request for ${productName}`
+      action: `Created a supply request for ${finalProductName}`
     });
 
     // Create Notification
     await Notification.create({
       userId: req.user.userId,
-      message: `Your supply request for ${productName} has been created successfully.`
+      message: `Your supply request for ${finalProductName} has been created successfully.`
     });
 
     res.status(201).json(createdRequest);

@@ -14,6 +14,12 @@ const {
   markNotificationRead,
   getActivity
 } = require('../controllers/supplierDashboardController');
+const {
+  getInventory,
+  addInventoryItem,
+  updateInventoryItem,
+  deleteInventoryItem
+} = require('../controllers/inventoryController');
 const { authenticate } = require('../middleware/authMiddleware');
 const { authorizeRoles } = require('../middleware/roleMiddleware');
 
@@ -24,6 +30,14 @@ router.use(authenticate, authorizeRoles('supplier'));
 router.route('/profile')
   .get(getProfile)
   .put(updateProfile);
+
+// Inventory routes
+router.route('/inventory')
+  .get(getInventory)
+  .post(addInventoryItem);
+router.route('/inventory/:id')
+  .put(updateInventoryItem)
+  .delete(deleteInventoryItem);
 
 // Requests routes
 router.get('/requests', getRequests);
