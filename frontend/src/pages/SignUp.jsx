@@ -3,6 +3,7 @@ import muiTheme from '../theme/muiTheme';
 import SignUpBrand from '../components/SignUp/SignUpBrand';
 import SignUpFormCard from '../components/SignUp/SignUpFormCard';
 import SignUpTrustSignals from '../components/SignUp/SignUpTrustSignals';
+import useSEO from '../hooks/useSEO';
 
 /**
  * SignUp page — mirrors the full layout from example.html:
@@ -10,6 +11,10 @@ import SignUpTrustSignals from '../components/SignUp/SignUpTrustSignals';
  *   • Fixed right-side decorative architectural image (lg+ screens)
  */
 const SignUp = () => {
+  useSEO({
+    title: 'Sign Up',
+    description: 'Create your free TrustGrid account. Join as a buyer or supplier and start streamlining your B2B procurement today.',
+  });
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />

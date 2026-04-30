@@ -3,6 +3,7 @@ import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { apiFetch } from '../utils/api';
+import useSEO from '../hooks/useSEO';
 import RateSupplierHeader from '../components/BuyerDashboard/RateSupplier/RateSupplierHeader';
 import SupplierContextCard from '../components/BuyerDashboard/RateSupplier/SupplierContextCard';
 import RatingForm from '../components/BuyerDashboard/RateSupplier/RatingForm';
@@ -19,6 +20,11 @@ const RateSupplierPage = () => {
 
   const [supplier, setSupplier] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useSEO({
+    title: supplier ? `Rate ${supplier.name}` : 'Rate Supplier',
+    description: 'Leave a verified review for your supplier on TrustGrid. Help other buyers make informed procurement decisions.',
+  });
 
   useEffect(() => {
     const fetchSupplier = async () => {

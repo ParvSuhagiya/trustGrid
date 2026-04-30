@@ -7,6 +7,7 @@ import SupplierStatsRating from '../components/BuyerDashboard/SupplierProfile/Su
 import SupplierProductTable from '../components/BuyerDashboard/SupplierProfile/SupplierProductTable';
 import SupplierReviews from '../components/BuyerDashboard/SupplierProfile/SupplierReviews';
 import { apiFetch } from '../utils/api';
+import useSEO from '../hooks/useSEO';
 
 /**
  * SupplierProfilePage
@@ -16,10 +17,17 @@ import { apiFetch } from '../utils/api';
 const SupplierProfilePage = () => {
   const { supplierId } = useParams();
   const navigate = useNavigate();
-  
+
   const [supplier, setSupplier] = useState(null);
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useSEO({
+    title: supplier ? supplier.name : 'Supplier Profile',
+    description: supplier
+      ? `View ${supplier.name}'s profile on TrustGrid — products, ratings, reviews, and procurement options.`
+      : 'View supplier profile, products, and reviews on TrustGrid.',
+  });
 
   // Dialog State
   const [dialogOpen, setDialogOpen] = useState(false);

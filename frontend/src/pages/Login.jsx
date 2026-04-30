@@ -3,8 +3,13 @@ import muiTheme from '../theme/muiTheme';
 import LoginHeader from '../components/LoginHeader';
 import LoginForm from '../components/LoginForm';
 import LoginFooter from '../components/LoginFooter';
+import useSEO from '../hooks/useSEO';
 
 const Login = () => {
+  useSEO({
+    title: 'Login',
+    description: 'Log in to your TrustGrid account to manage procurement, track orders, and connect with trusted suppliers.',
+  });
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />

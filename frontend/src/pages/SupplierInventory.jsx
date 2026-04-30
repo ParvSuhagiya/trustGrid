@@ -5,6 +5,7 @@ import AddSupplyForm from '../components/SupplierDashboard/Inventory/AddSupplyFo
 import InventoryTable from '../components/SupplierDashboard/Inventory/InventoryTable';
 import InventoryAnalyticsCards from '../components/SupplierDashboard/Inventory/InventoryAnalyticsCards';
 import { apiFetch } from '../utils/api';
+import useSEO from '../hooks/useSEO';
 
 /**
  * SupplierInventory — child route at /supplier-dashboard/inventory
@@ -20,6 +21,10 @@ import { apiFetch } from '../utils/api';
  *   └──────────────┴──────────────────────────┘
  */
 const SupplierInventory = () => {
+  useSEO({
+    title: 'Inventory',
+    description: 'Manage your supply inventory on TrustGrid. Add, edit, and track your products, stock levels, and pricing in real time.',
+  });
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 

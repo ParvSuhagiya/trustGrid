@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import useSEO from '../hooks/useSEO';
 import MarketplaceHero from '../components/SupplierDashboard/Marketplace/MarketplaceHero';
 import FeaturedBuyerCard from '../components/SupplierDashboard/Marketplace/FeaturedBuyerCard';
 import MarketplaceStatsCard from '../components/SupplierDashboard/Marketplace/MarketplaceStatsCard';
@@ -12,7 +13,12 @@ import MarketplaceFAB from '../components/SupplierDashboard/Marketplace/Marketpl
  * SupplierMarketplace — rendered inside SupplierDashboardLayout <Outlet>.
  * Sidebar and Topbar are NOT re-rendered when navigating to this page.
  */
-const SupplierMarketplace = () => (
+const SupplierMarketplace = () => {
+  useSEO({
+    title: 'Buyer Marketplace',
+    description: 'Explore buyers actively seeking suppliers on TrustGrid. Connect with buyers in your industry and grow your supplier network.',
+  });
+  return (
   <Box sx={{ pt: 3, pb: 6, px: 4, minHeight: '100vh', backgroundColor: '#000' }}>
 
     {/* Page hero with title and filter tabs */}
@@ -94,6 +100,7 @@ const SupplierMarketplace = () => (
     {/* Floating filter button */}
     <MarketplaceFAB />
   </Box>
-);
+  );
+};
 
 export default SupplierMarketplace;

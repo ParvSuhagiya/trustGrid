@@ -7,12 +7,17 @@ import ArchivedRequestsList from '../components/SupplierDashboard/BuyerRequests/
 import BuyerRequestsFAB from '../components/SupplierDashboard/BuyerRequests/BuyerRequestsFAB';
 import { useState, useEffect } from 'react';
 import { apiFetch } from '../utils/api';
+import useSEO from '../hooks/useSEO';
 
 /**
  * SupplierBuyerRequests — rendered inside SupplierDashboardLayout <Outlet>.
  * Displays pending marketplace requests and allows the supplier to act on them.
  */
 const SupplierBuyerRequests = () => {
+  useSEO({
+    title: 'Buyer Requests',
+    description: 'View and respond to incoming buyer requests on TrustGrid. Accept or decline orders and manage your procurement pipeline.',
+  });
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
