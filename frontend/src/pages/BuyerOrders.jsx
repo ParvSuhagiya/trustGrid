@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material';
+import useSEO from '../hooks/useSEO';
 import AddIcon from '@mui/icons-material/Add';
 
 import OrdersHeader    from '../components/BuyerDashboard/OrderComponents/OrdersHeader';
@@ -13,7 +14,12 @@ import PaginationFooter from '../components/BuyerDashboard/OrderComponents/Pagin
  * the OrderComponents sub-folder. Sidebar and topbar are provided
  * by BuyerDashboardLayout via React Router's <Outlet>.
  */
-const BuyerOrders = () => (
+const BuyerOrders = () => {
+  useSEO({
+    title: 'My Orders',
+    description: 'Track and manage all your procurement orders on TrustGrid. View order status, delivery timelines, and supplier responses.',
+  });
+  return (
   <Box sx={{ px: 4, pt: 4, pb: 8, minHeight: '100vh', position: 'relative' }}>
 
     {/* ── Page title + action buttons ── */}
@@ -46,6 +52,7 @@ const BuyerOrders = () => (
     </Button>
 
   </Box>
-);
+  );
+};
 
 export default BuyerOrders;
