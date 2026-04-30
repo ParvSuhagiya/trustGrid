@@ -1,18 +1,9 @@
 import { Box, Typography, Button } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
 import MemoryIcon from '@mui/icons-material/Memory';
-import RouterIcon from '@mui/icons-material/Router';
 
 const C = { accent: '#22C55E', outline: '#333333', muted: '#CCCCCC' };
-
-/** Map icon string → MUI Icon component */
-const ICON_MAP = {
-  settings_input_component: SettingsInputComponentIcon,
-  memory: MemoryIcon,
-  router: RouterIcon,
-};
 
 /** Stock status pill */
 const StockBadge = ({ status }) => {
@@ -22,8 +13,8 @@ const StockBadge = ({ status }) => {
       component="span"
       sx={{
         px: 1.5, py: 0.5, borderRadius: '9999px',
-        border: `1px solid ${inStock ? C.accent + '4D' : C.outline}`,
-        color: inStock ? C.accent : C.muted,
+        border: `1px solid ${inStock ? C.accent + '4D' : '#f44336' + '4D'}`,
+        color: inStock ? C.accent : '#f44336',
         fontSize: '0.625rem', fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.1em',
       }}
@@ -36,9 +27,9 @@ const StockBadge = ({ status }) => {
 /**
  * SupplierProductTable
  * Renders the "Available Supplies" inventory table.
- * Accepts `products` array from the parent supplier data.
+ * Accepts `products` array from the parent supplier data and an `onOrderClick` handler.
  */
-const SupplierProductTable = ({ products }) => (
+const SupplierProductTable = ({ products, onOrderClick }) => (
   <Box component="section" sx={{ mb: 16 }}>
     {/* Header row */}
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 4 }}>
@@ -80,7 +71,7 @@ const SupplierProductTable = ({ products }) => (
               backgroundColor: 'rgba(255,255,255,0.03)',
             }}
           >
-            {['Product Details', 'SKU / ID', 'Lead Time', 'Unit Price', 'Stock', ''].map((h) => (
+            {['Product Details', 'Category', 'Unit Price', 'Available Stock', 'Status', ''].map((h) => (
               <Box
                 key={h}
                 component="th"
@@ -100,11 +91,11 @@ const SupplierProductTable = ({ products }) => (
         {/* Body */}
         <Box component="tbody">
           {products.map((product) => {
-            const IconComponent = ICON_MAP[product.icon] || MemoryIcon;
+            const stockStatus = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
             return (
               <Box
                 component="tr"
-                key={product.sku}
+                key={product._id}
                 sx={{
                   borderBottom: `1px solid ${C.outline}`,
                   '&:last-child': { borderBottom: 'none' },
@@ -126,43 +117,43 @@ const SupplierProductTable = ({ products }) => (
                         color: '#fff', flexShrink: 0,
                       }}
                     >
-                      <IconComponent sx={{ fontSize: '1.5rem' }} />
+                      <MemoryIcon sx={{ fontSize: '1.5rem' }} />
                     </Box>
                     <Box>
                       <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: '#fff' }}>
-                        {product.name}
+                        {product.productName}
                       </Typography>
                       <Typography sx={{ fontSize: '0.625rem', color: C.muted, fontWeight: 700 }}>
-                        {product.subtitle}
+                        {product.description || 'Standard Grade'}
                       </Typography>
                     </Box>
                   </Box>
                 </Box>
 
-                {/* SKU */}
+                {/* Category */}
                 <Box component="td" sx={{ px: 4, py: 3 }}>
                   <Typography sx={{ fontSize: '0.875rem', color: C.muted, fontFamily: 'monospace', fontWeight: 700 }}>
-                    {product.sku}
-                  </Typography>
-                </Box>
-
-                {/* Lead Time */}
-                <Box component="td" sx={{ px: 4, py: 3 }}>
-                  <Typography sx={{ fontSize: '0.875rem', color: C.muted, fontWeight: 700 }}>
-                    {product.leadTime}
+                    {product.category}
                   </Typography>
                 </Box>
 
                 {/* Unit Price */}
                 <Box component="td" sx={{ px: 4, py: 3 }}>
                   <Typography sx={{ fontSize: '0.875rem', fontWeight: 700, color: '#fff' }}>
-                    {product.price}
+                    ${product.price}
+                  </Typography>
+                </Box>
+
+                {/* Quantity */}
+                <Box component="td" sx={{ px: 4, py: 3 }}>
+                  <Typography sx={{ fontSize: '0.875rem', color: C.muted, fontWeight: 700 }}>
+                    {product.quantity} units
                   </Typography>
                 </Box>
 
                 {/* Stock Status */}
                 <Box component="td" sx={{ px: 4, py: 3 }}>
-                  <StockBadge status={product.stock} />
+                  <StockBadge status={stockStatus} />
                 </Box>
 
                 {/* Cart Action */}
@@ -170,10 +161,12 @@ const SupplierProductTable = ({ products }) => (
                   <Box
                     component="button"
                     className="cart-btn"
+                    onClick={() => onOrderClick && product.quantity > 0 ? onOrderClick(product) : null}
+                    disabled={product.quantity === 0}
                     sx={{
-                      background: 'none', border: 'none', cursor: 'pointer',
-                      color: C.muted, display: 'inline-flex', alignItems: 'center',
-                      '&:hover': { color: C.accent },
+                      background: 'none', border: 'none', cursor: product.quantity > 0 ? 'pointer' : 'not-allowed',
+                      color: product.quantity > 0 ? C.accent : C.muted, display: 'inline-flex', alignItems: 'center',
+                      '&:hover': { color: product.quantity > 0 ? '#1ea64f' : C.muted },
                       transition: 'color 0.2s',
                     }}
                   >
