@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Request = require('../models/Request');
 
 // @desc    Get dashboard metrics dynamically
@@ -6,21 +7,19 @@ const Request = require('../models/Request');
 const getMetrics = async (req, res) => {
   try {
     const buyerId = req.user.userId;
+    const objectIdBuyer = new mongoose.Types.ObjectId(buyerId);
 
     // We can run parallel queries for performance
-    const [totalRequests, activeRequests, completedRequests, spentAggregation] = await Promise.all([
+    const [totalRequests, activeRequests, completedRequests] = await Promise.all([
       Request.countDocuments({ buyerId }),
       Request.countDocuments({ buyerId, status: { $in: ['pending', 'accepted'] } }),
-      Request.countDocuments({ buyerId, status: 'completed' }),
-      Request.aggregate([
-        { $match: { buyerId: req.user.userId, status: 'completed' } }, // Note: we need to cast to ObjectId if necessary, let's assume it matches. In mongoose aggregation, we should match carefully. We will use the proper mongoose ObjectId if it's stored as ObjectId. 
-      ])
+      Request.countDocuments({ buyerId, status: 'completed' })
     ]);
 
     // Let's do the aggregation properly for total spent
     const spentResult = await Request.aggregate([
-      // match buyer ID. Need to ensure it's matched correctly. We'll use mongoose object id just in case
-      { $match: { buyerId: new require('mongoose').Types.ObjectId(req.user.userId), status: 'completed' } },
+      // match buyer ID properly casted to ObjectId
+      { $match: { buyerId: objectIdBuyer, status: 'completed' } },
       { $group: { _id: null, total: { $sum: '$budget' } } }
     ]);
 
