@@ -1,7 +1,8 @@
-import { Box, Button, Typography } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { supplierProfiles } from '../data/supplierData';
+import { apiFetch } from '../utils/api';
 import RateSupplierHeader from '../components/BuyerDashboard/RateSupplier/RateSupplierHeader';
 import SupplierContextCard from '../components/BuyerDashboard/RateSupplier/SupplierContextCard';
 import RatingForm from '../components/BuyerDashboard/RateSupplier/RatingForm';
@@ -10,12 +11,36 @@ import VerifiedTransactionFooter from '../components/BuyerDashboard/RateSupplier
 /**
  * RateSupplierPage
  * Child route rendered at /buyer-dashboard/marketplace/:supplierId/rate
- * Sidebar and Topbar come from BuyerDashboardLayout — only main content changes.
+ * Fetches supplier data dynamically from the backend.
  */
 const RateSupplierPage = () => {
   const { supplierId } = useParams();
   const navigate = useNavigate();
-  const supplier = supplierProfiles[supplierId];
+
+  const [supplier, setSupplier] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSupplier = async () => {
+      try {
+        const data = await apiFetch(`/api/suppliers/${supplierId}`);
+        setSupplier(data);
+      } catch (error) {
+        console.error('Failed to fetch supplier:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSupplier();
+  }, [supplierId]);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', pt: 10 }}>
+        <CircularProgress color="success" />
+      </Box>
+    );
+  }
 
   /* ── 404 fallback ── */
   if (!supplier) {
@@ -43,8 +68,7 @@ const RateSupplierPage = () => {
           Supplier Not Found
         </Typography>
         <Typography sx={{ color: '#CCCCCC', fontSize: '1rem', fontWeight: 500 }}>
-          Cannot rate an unknown supplier:{' '}
-          <strong style={{ color: '#fff' }}>"{supplierId}"</strong>
+          The supplier profile does not exist.
         </Typography>
         <Button
           startIcon={<ArrowBackIcon />}
@@ -77,7 +101,6 @@ const RateSupplierPage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        /* Thin scrollbar */
         '&::-webkit-scrollbar': { width: 4 },
         '&::-webkit-scrollbar-track': { background: '#000' },
         '&::-webkit-scrollbar-thumb': { background: '#333', borderRadius: 10 },
@@ -131,3 +154,5 @@ const RateSupplierPage = () => {
 };
 
 export default RateSupplierPage;
+
+

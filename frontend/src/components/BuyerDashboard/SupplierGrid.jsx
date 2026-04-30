@@ -15,8 +15,7 @@ const C = { accent: '#22C55E', outline: '#333333', muted: '#CCCCCC', primary: '#
 /** Individual supplier card */
 const SupplierCard = ({ id, img, alt, badge, category, name, rating, description, footer, onRequestClick }) => {
   const navigate = useNavigate();
-  const slug = nameToSlug(name);
-  const handleClick = () => navigate(`/buyer-dashboard/marketplace/${slug}`);
+  const handleClick = () => navigate(`/buyer-dashboard/marketplace/${id}`);
 
   return (
   <Box
