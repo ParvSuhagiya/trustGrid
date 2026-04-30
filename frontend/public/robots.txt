@@ -11,4 +11,4 @@ Disallow: /supplier-dashboard/
 Disallow: /api/
 
 # Specify sitemap location
-Sitemap: https://trust-grid.vercel.app/sitemap.xml
+Sitemap: https://trust-grid-5zwmtkvsq-easywebsites3-5709s-projects.vercel.app/sitemap.xml
