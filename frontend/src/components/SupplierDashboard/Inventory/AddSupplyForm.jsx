@@ -34,24 +34,30 @@ const labelSx = {
 /**
  * AddSupplyForm
  * Left-panel card: "Register New Supply" form.
- * Props:
- *   onAdd(item) — called when the user submits; receives the new supply object.
  */
 const AddSupplyForm = ({ onAdd }) => {
   const [form, setForm] = useState({
-    name: '',
+    productName: '',
     quantity: '',
+    price: '',
     category: 'Raw Materials',
-    location: '',
+    description: '',
   });
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   const handleSubmit = () => {
-    if (!form.name.trim() || !form.quantity) return;
-    if (onAdd) onAdd({ ...form });
-    setForm({ name: '', quantity: '', category: 'Raw Materials', location: '' });
+    if (!form.productName.trim() || !form.quantity || !form.price) return;
+    
+    if (onAdd) {
+      onAdd({
+        ...form,
+        quantity: Number(form.quantity),
+        price: Number(form.price),
+      });
+    }
+    setForm({ productName: '', quantity: '', price: '', category: 'Raw Materials', description: '' });
   };
 
   return (
@@ -89,8 +95,8 @@ const AddSupplyForm = ({ onAdd }) => {
           <Typography component="label" sx={labelSx}>Product Name</Typography>
           <TextField
             fullWidth
-            value={form.name}
-            onChange={handleChange('name')}
+            value={form.productName}
+            onChange={handleChange('productName')}
             placeholder="e.g. Industrial Cobalt Refine"
             variant="outlined"
             size="small"
@@ -98,7 +104,7 @@ const AddSupplyForm = ({ onAdd }) => {
           />
         </Box>
 
-        {/* Qty + Category */}
+        {/* Qty + Price */}
         <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2 }}>
           {/* Quantity */}
           <Box>
@@ -112,70 +118,72 @@ const AddSupplyForm = ({ onAdd }) => {
                 placeholder="0.00"
                 variant="outlined"
                 size="small"
-                sx={{
-                  ...inputSx,
-                  '& .MuiOutlinedInput-input': { pr: 5 },
-                }}
+                sx={inputSx}
               />
-              <Typography
-                sx={{
-                  position: 'absolute',
-                  right: 12,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '0.625rem',
-                  fontWeight: 700,
-                  color: C.muted,
-                  pointerEvents: 'none',
-                }}
-              >
-                KG
-              </Typography>
             </Box>
           </Box>
 
-          {/* Category */}
+          {/* Price */}
           <Box>
-            <Typography component="label" sx={labelSx}>Category</Typography>
-            <FormControl fullWidth size="small">
-              <Select
-                value={form.category}
-                onChange={handleChange('category')}
-                sx={{
-                  backgroundColor: '#000',
-                  borderRadius: '6px',
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: '0.875rem',
-                  color: '#fff',
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: C.outline },
-                  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#555' },
-                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: C.accent, borderWidth: 1 },
-                  '& .MuiSvgIcon-root': { color: C.muted },
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    sx: { backgroundColor: '#111', border: `1px solid ${C.outline}`, color: '#fff' },
-                  },
-                }}
-              >
-                <MenuItem value="Raw Materials">Raw Materials</MenuItem>
-                <MenuItem value="Finished Goods">Finished Goods</MenuItem>
-                <MenuItem value="Chemicals">Chemicals</MenuItem>
-              </Select>
-            </FormControl>
+            <Typography component="label" sx={labelSx}>Price / Unit ($)</Typography>
+            <Box sx={{ position: 'relative' }}>
+              <TextField
+                fullWidth
+                type="number"
+                value={form.price}
+                onChange={handleChange('price')}
+                placeholder="0.00"
+                variant="outlined"
+                size="small"
+                sx={inputSx}
+              />
+            </Box>
           </Box>
         </Box>
 
-        {/* Warehouse Location */}
+        {/* Category */}
         <Box>
-          <Typography component="label" sx={labelSx}>Warehouse Location</Typography>
+          <Typography component="label" sx={labelSx}>Category</Typography>
+          <FormControl fullWidth size="small">
+            <Select
+              value={form.category}
+              onChange={handleChange('category')}
+              sx={{
+                backgroundColor: '#000',
+                borderRadius: '6px',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '0.875rem',
+                color: '#fff',
+                '& .MuiOutlinedInput-notchedOutline': { borderColor: C.outline },
+                '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#555' },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: C.accent, borderWidth: 1 },
+                '& .MuiSvgIcon-root': { color: C.muted },
+              }}
+              MenuProps={{
+                PaperProps: {
+                  sx: { backgroundColor: '#111', border: `1px solid ${C.outline}`, color: '#fff' },
+                },
+              }}
+            >
+              <MenuItem value="Raw Materials">Raw Materials</MenuItem>
+              <MenuItem value="Finished Goods">Finished Goods</MenuItem>
+              <MenuItem value="Chemicals">Chemicals</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* Description */}
+        <Box>
+          <Typography component="label" sx={labelSx}>Description</Typography>
           <TextField
             fullWidth
-            value={form.location}
-            onChange={handleChange('location')}
-            placeholder="Sector 7G - North"
+            value={form.description}
+            onChange={handleChange('description')}
+            placeholder="Brief details about the item..."
             variant="outlined"
             size="small"
+            multiline
+            rows={2}
             sx={inputSx}
           />
         </Box>

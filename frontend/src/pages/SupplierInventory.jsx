@@ -1,8 +1,10 @@
-import { Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, CircularProgress } from '@mui/material';
 import InventoryPageHeader from '../components/SupplierDashboard/Inventory/InventoryPageHeader';
 import AddSupplyForm from '../components/SupplierDashboard/Inventory/AddSupplyForm';
 import InventoryTable from '../components/SupplierDashboard/Inventory/InventoryTable';
 import InventoryAnalyticsCards from '../components/SupplierDashboard/Inventory/InventoryAnalyticsCards';
+import { apiFetch } from '../utils/api';
 
 /**
  * SupplierInventory — child route at /supplier-dashboard/inventory
@@ -18,18 +20,55 @@ import InventoryAnalyticsCards from '../components/SupplierDashboard/Inventory/I
  *   └──────────────┴──────────────────────────┘
  */
 const SupplierInventory = () => {
-  const handleAdd = (item) => {
-    // TODO: wire to real state / API
-    console.log('New supply added:', item);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchInventory = async () => {
+    try {
+      const data = await apiFetch('/api/supplier/inventory');
+      setItems(data);
+    } catch (error) {
+      console.error('Failed to fetch inventory:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDelete = (id) => {
-    console.log('Delete supply id:', id);
+  useEffect(() => {
+    fetchInventory();
+  }, []);
+
+  const handleAdd = async (item) => {
+    try {
+      await apiFetch('/api/supplier/inventory', {
+        method: 'POST',
+        body: JSON.stringify(item),
+      });
+      fetchInventory(); // Refresh list
+    } catch (error) {
+      console.error('Failed to add supply:', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await apiFetch(`/api/supplier/inventory/${id}`, {
+        method: 'DELETE',
+      });
+      fetchInventory(); // Refresh list
+    } catch (error) {
+      console.error('Failed to delete supply:', error);
+    }
   };
 
   const handleEdit = (id) => {
     console.log('Edit supply id:', id);
+    // Future edit modal logic here
   };
+
+  if (loading) {
+    return <Box sx={{ display: 'flex', justifyContent: 'center', pt: 10 }}><CircularProgress color="success" /></Box>;
+  }
 
   return (
     <Box
@@ -62,7 +101,7 @@ const SupplierInventory = () => {
 
         {/* Right: Table + analytics */}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <InventoryTable onDelete={handleDelete} onEdit={handleEdit} />
+          <InventoryTable items={items} onDelete={handleDelete} onEdit={handleEdit} />
           <InventoryAnalyticsCards />
         </Box>
       </Box>
