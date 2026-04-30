@@ -1,4 +1,5 @@
 const Supplier = require('../models/Supplier');
+const Supply = require('../models/Supply');
 
 // @desc    Get all suppliers
 // @route   GET /api/suppliers
@@ -38,4 +39,17 @@ const getSupplierById = async (req, res) => {
   }
 };
 
-module.exports = { getSuppliers, getSupplierById };
+// @desc    Get a supplier's inventory
+// @route   GET /api/suppliers/:id/inventory
+// @access  Private
+const getSupplierInventory = async (req, res) => {
+  try {
+    const inventory = await Supply.find({ supplierId: req.params.id }).sort({ createdAt: -1 });
+    res.json(inventory);
+  } catch (error) {
+    console.error('Error fetching supplier inventory:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { getSuppliers, getSupplierById, getSupplierInventory };

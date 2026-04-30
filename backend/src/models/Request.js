@@ -11,6 +11,11 @@ const requestSchema = new mongoose.Schema({
     ref: 'Supplier',
     required: false,
   },
+  supplyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Supply',
+    required: false,
+  },
   productName: {
     type: String,
     required: true,
