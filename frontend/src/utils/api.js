@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://trustgrid.onrender.com';
 
 export const apiFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
