@@ -1,5 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -71,6 +72,7 @@ const NavItem = ({ icon, label, to, end }) => {
 
 const BuyerSidebar = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <Box
@@ -126,8 +128,8 @@ const BuyerSidebar = () => {
             sx={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', backgroundColor: C.outline }}
           />
           <Box sx={{ overflow: 'hidden' }}>
-            <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Alex Sterling</Typography>
-            <Typography sx={{ fontSize: '0.625rem', color: C.muted, fontWeight: 700 }}>Procurement Lead</Typography>
+            <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name || 'Alex Sterling'}</Typography>
+            <Typography sx={{ fontSize: '0.625rem', color: C.muted, fontWeight: 700 }}>{user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'Procurement Lead'}</Typography>
           </Box>
         </Box>
       </Box>

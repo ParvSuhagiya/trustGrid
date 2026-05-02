@@ -1,4 +1,4 @@
-import { Box, IconButton, InputBase, Typography } from '@mui/material';
+import { Box, IconButton, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined';
@@ -71,16 +71,7 @@ const SupplierTopbar = () => (
           <HelpOutlinedIcon />
         </IconButton>
       </Box>
-      <Box sx={{ width: 1, height: 32, backgroundColor: C.outline, mx: 1 }} />
-      <Typography
-        sx={{
-          fontFamily: "'Manrope', sans-serif", fontWeight: 700,
-          fontSize: '0.875rem', letterSpacing: '-0.03em',
-          color: '#fff', textTransform: 'uppercase',
-        }}
-      >
-        MARKETPLACE OS
-      </Typography>
+
     </Box>
   </Box>
 );

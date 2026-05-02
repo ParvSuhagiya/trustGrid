@@ -1,5 +1,6 @@
 import { Box, Typography, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -36,32 +37,46 @@ const navItemBaseSx = {
 };
 
 // NavLink's `style` callback is the correct place for isActive-dependent styles
-const NavItem = ({ icon, label, to, end }) => (
-  <Box
-    component={NavLink}
-    to={to}
-    end={end}
-    sx={navItemBaseSx}
-    style={({ isActive }) => ({
-      color: isActive ? C.primary : C.muted,
-      backgroundColor: isActive ? '#111111' : 'transparent',
-      borderRight: isActive ? `2px solid ${C.primary}` : '2px solid transparent',
-    })}
-  >
-    {icon}
-    {label}
-  </Box>
-);
+const NavItem = ({ icon, label, to, end }) => {
+  // No real route (e.g. Settings, Support) → plain anchor, never styled as active
+  if (!to) {
+    return (
+      <Box component="a" href="#" sx={{ ...navItemBaseSx, color: C.muted }}>
+        {icon}
+        {label}
+      </Box>
+    );
+  }
+  return (
+    <Box
+      component={NavLink}
+      to={to}
+      end={end}
+      sx={navItemBaseSx}
+      style={({ isActive }) => ({
+        color: isActive ? C.primary : C.muted,
+        backgroundColor: isActive ? '#111111' : 'transparent',
+        borderRight: isActive ? `2px solid ${C.primary}` : '2px solid transparent',
+      })}
+    >
+      {icon}
+      {label}
+    </Box>
+  );
+};
 
-const SupplierSidebar = () => (
-  <Box
-    component="aside"
-    sx={{
-      position: 'fixed', left: 0, top: 0, height: '100vh', width: 256,
-      display: 'flex', flexDirection: 'column',
-      backgroundColor: '#000', borderRight: `1px solid ${C.outline}`, zIndex: 60,
-    }}
-  >
+const SupplierSidebar = () => {
+  const { user } = useAuth();
+  
+  return (
+    <Box
+      component="aside"
+      sx={{
+        position: 'fixed', left: 0, top: 0, height: '100vh', width: 256,
+        display: 'flex', flexDirection: 'column',
+        backgroundColor: '#000', borderRight: `1px solid ${C.outline}`, zIndex: 60,
+      }}
+    >
     {/* Brand */}
     <Box sx={{ p: 3, pb: 1 }}>
       <Typography
@@ -124,15 +139,15 @@ const SupplierSidebar = () => (
         />
         <Box>
           <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#fff' }}>
-            ALEX RIVERA
+            {user?.name?.toUpperCase() || 'ALEX RIVERA'}
           </Typography>
           <Typography sx={{ fontSize: '0.625rem', fontWeight: 700, color: C.muted }}>
-            FLEET MANAGER
+            {user?.role?.toUpperCase() || 'FLEET MANAGER'}
           </Typography>
         </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 export default SupplierSidebar;
