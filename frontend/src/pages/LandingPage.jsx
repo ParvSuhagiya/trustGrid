@@ -1,7 +1,7 @@
-import Navbar from "./components/Navbar";
-import MainContent from "./components/MainContent";
-import Footer from "./components/Footer";
-import useSEO from "./hooks/useSEO";
+import Navbar from "../components/LandingPage/Navbar";
+import MainContent from "../components/LandingPage/MainContent";
+import Footer from "../components/LandingPage/Footer";
+import useSEO from "../hooks/useSEO";
 
 const LandingPage = () => {
   useSEO({

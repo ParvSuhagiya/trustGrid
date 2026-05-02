@@ -1,8 +1,8 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import muiTheme from '../theme/muiTheme';
-import LoginHeader from '../components/LoginHeader';
-import LoginForm from '../components/LoginForm';
-import LoginFooter from '../components/LoginFooter';
+import LoginHeader from '../components/Login/LoginHeader';
+import LoginForm from '../components/Login/LoginForm';
+import LoginFooter from '../components/Login/LoginFooter';
 import useSEO from '../hooks/useSEO';
 
 const Login = () => {
