@@ -1,11 +1,19 @@
 import { createContext, useState, useEffect, useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import { apiFetch } from '../utils/api';
+import {
+  setCredentials,
+  clearCredentials,
+  setAuthLoading,
+} from '../store/slices/authSlice';
+import { clearUserProfile } from '../store/slices/userSlice';
 
 const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
+  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
@@ -14,16 +22,16 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       if (!token) {
         setLoading(false);
+        dispatch(setAuthLoading(false));
         return;
       }
 
       try {
-        // Just checking the buyer profile to see if token is valid.
-        // We'll decode the token or use a specific /me endpoint, 
-        // but for now let's just parse the JWT payload manually to get role
-        // since we didn't add a GET /api/auth/me route.
+        // Decode JWT payload to get role/user info (no /me endpoint needed)
         const payload = JSON.parse(atob(token.split('.')[1]));
         setUser(payload);
+        // Sync into Redux store
+        dispatch(setCredentials({ token }));
       } catch (error) {
         console.error('Invalid token', error);
         logout();
@@ -43,9 +51,13 @@ export const AuthProvider = ({ children }) => {
       });
       setToken(data.token);
       localStorage.setItem('token', data.token);
-      
+
       const payload = JSON.parse(atob(data.token.split('.')[1]));
       setUser(payload);
+
+      // Sync into Redux store
+      dispatch(setCredentials({ token: data.token }));
+
       return payload;
     } catch (error) {
       throw error;
@@ -60,9 +72,13 @@ export const AuthProvider = ({ children }) => {
       });
       setToken(data.token);
       localStorage.setItem('token', data.token);
-      
+
       const payload = JSON.parse(atob(data.token.split('.')[1]));
       setUser(payload);
+
+      // Sync into Redux store
+      dispatch(setCredentials({ token: data.token }));
+
       return payload;
     } catch (error) {
       throw error;
@@ -73,6 +89,10 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     localStorage.removeItem('token');
+
+    // Clear Redux store
+    dispatch(clearCredentials());
+    dispatch(clearUserProfile());
   };
 
   return (
