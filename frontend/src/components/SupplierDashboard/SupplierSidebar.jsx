@@ -147,6 +147,7 @@ const SupplierSidebar = () => {
         </Box>
       </Box>
     </Box>
+  </Box>
   );
 };
 
