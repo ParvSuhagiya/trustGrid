@@ -8,7 +8,7 @@ const LoginHeader = () => {
           to="/"
           className="text-2xl font-extrabold tracking-tighter text-[#e5e2e1] font-manrope hover:text-[#22c55e] transition-colors"
         >
-          ARCHITECT
+          TRUSTGRID
         </Link>
       </div>
     </header>

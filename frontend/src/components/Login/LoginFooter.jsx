@@ -10,7 +10,7 @@ const LoginFooter = () => {
       <div className="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto gap-8">
         {/* Brand */}
         <div className="text-lg font-black text-[#e5e2e1] font-manrope">
-          ARCHITECT
+          TRUSTGRID
         </div>
 
         {/* Links */}

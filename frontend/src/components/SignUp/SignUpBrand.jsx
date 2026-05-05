@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 /**
- * Brand Identity Block — "ARCHITECT" headline + sub-tagline.
+ * Brand Identity Block — "TRUSTGRID" headline + sub-tagline.
  * Mirrors the <div class="mb-12 text-center md:text-left"> block in example.html.
  */
 const SignUpBrand = () => (
@@ -17,7 +17,7 @@ const SignUpBrand = () => (
         lineHeight: 1,
       }}
     >
-      ARCHITECT
+      TRUSTGRID
     </Typography>
 
     <Typography

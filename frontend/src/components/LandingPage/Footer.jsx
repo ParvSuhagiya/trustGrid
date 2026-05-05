@@ -12,7 +12,7 @@ const Footer = () => {
         {/* Brand */}
         <div className="flex flex-col items-center md:items-start">
           <span className="text-lg font-black text-[#e5e2e1] font-manrope mb-2">
-            ARCHITECT
+            TRUSTGRID
           </span>
           <p className="text-[10px] font-manrope uppercase tracking-widest text-[#e5e2e1]/60">
             © 2024 Architectural Minimalist. Built for precision.
