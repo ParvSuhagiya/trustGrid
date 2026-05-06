@@ -2,10 +2,13 @@
 
 A full-stack **B2B procurement platform** that connects buyers and suppliers through a live inventory-driven marketplace with real-time order management.
 
-🔗 **Live Backend**: [https://trustgrid.onrender.com](https://trustgrid.onrender.com)
-🎨 **Figma Design**: [View Design](https://www.figma.com/design/NPQq2cWNJDJLFPOdHq6RiE/Untitled?node-id=0-1&t=OYYOmA4SDKInHYc1-1)
-📁 **GitHub**: [ParvSuhagiya/trustGrid](https://github.com/ParvSuhagiya/trustGrid)
+## 🔗 Project Links
 
+- 🚀 **Live Deployed Project**: [https://trust-grid-beta.vercel.app/](https://trust-grid-beta.vercel.app/)
+- ⚙️ **Backend Deployed Link**: [https://trustgrid.onrender.com](https://trustgrid.onrender.com)
+- 📄 **Postman Documentation**: [https://documenter.getpostman.com/view/54120938/2sBXqKof1E](https://documenter.getpostman.com/view/54120938/2sBXqKof1E)
+- 🎨 **Figma Design**: [https://www.figma.com/design/NPQq2cWNJDJLFPOdHq6RiE/Untitled?node-id=440-22&t=HVOaZgShh2gPXRbr-1](https://www.figma.com/design/NPQq2cWNJDJLFPOdHq6RiE/Untitled?node-id=440-22&t=HVOaZgShh2gPXRbr-1)
+- 🎥 **YouTube Demo Video**: [https://youtu.be/7lLgh_hRB3A?si=RJPfJjawLFcJVsSr](https://youtu.be/7lLgh_hRB3A?si=RJPfJjawLFcJVsSr)
 ---
 
 ## 🚀 Overview
