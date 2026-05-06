@@ -19,7 +19,7 @@ const SupplierMarketplace = () => {
     description: 'Explore buyers actively seeking suppliers on TrustGrid. Connect with buyers in your industry and grow your supplier network.',
   });
   return (
-  <Box sx={{ pt: 3, pb: 6, px: 4, minHeight: '100vh', backgroundColor: '#000' }}>
+  <Box sx={{ pt: { xs: 2, md: 3 }, pb: 6, px: { xs: 2, sm: 3, md: 4 }, minHeight: '100vh', backgroundColor: '#000' }}>
 
     {/* Page hero with title and filter tabs */}
     <MarketplaceHero />

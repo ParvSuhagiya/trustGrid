@@ -14,7 +14,7 @@ const SupplierDashboardHome = () => {
     description: 'Manage your supplier business on TrustGrid. View performance metrics, buyer activity, market intelligence, and incoming requests.',
   });
   return (
-    <Box sx={{ pt: '32px', pb: 6, px: 4, minHeight: '100vh', backgroundColor: '#000' }}>
+    <Box sx={{ pt: { xs: '24px', md: '32px' }, pb: 6, px: { xs: 2, sm: 3, md: 4 }, minHeight: '100vh', backgroundColor: '#000' }}>
       {/* Hero: performance heading + metric cards + incoming requests */}
       <HeroSummary />
 

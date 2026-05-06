@@ -49,7 +49,7 @@ const FeaturedRequestCard = ({ request, onAccept, onReject }) => {
         overflow: 'hidden',
       }}
     >
-      <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Box sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
 
         {/* ── Top row: logo + company + expiry ── */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
@@ -104,8 +104,8 @@ const FeaturedRequestCard = ({ request, onAccept, onReject }) => {
         {/* ── Detail grid ── */}
         <Box
           sx={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 4, py: 4, borderTop: `1px solid ${C.outline}`, borderBottom: `1px solid ${C.outline}`,
+            display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+            gap: { xs: 2, md: 4 }, py: 4, borderTop: `1px solid ${C.outline}`, borderBottom: `1px solid ${C.outline}`,
           }}
         >
           <DetailItem label="Service Required" value={service} />

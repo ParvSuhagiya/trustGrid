@@ -17,7 +17,7 @@ const BuyerMarketplace = () => {
   return (
     <Box
       sx={{
-        px: 6, pt: 4, pb: 6,
+        px: { xs: 2, sm: 3, md: 6 }, pt: { xs: 2, md: 4 }, pb: 6,
         backgroundColor: '#000', minHeight: '100%',
         '&::-webkit-scrollbar': { width: 4 },
         '&::-webkit-scrollbar-track': { background: '#000' },
@@ -37,7 +37,7 @@ const BuyerMarketplace = () => {
       <Box
         component="button"
         sx={{
-          position: 'fixed', bottom: 32, right: 32,
+          position: 'fixed', bottom: { xs: 16, md: 32 }, right: { xs: 16, md: 32 },
           width: 64, height: 64, backgroundColor: '#fff', color: '#000',
           borderRadius: '10px', border: `1px solid #333`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',

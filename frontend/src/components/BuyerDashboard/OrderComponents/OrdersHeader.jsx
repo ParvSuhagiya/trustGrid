@@ -37,7 +37,7 @@ const OrdersHeader = () => (
     </Box>
 
     {/* Action buttons */}
-    <Box sx={{ display: 'flex', gap: 1.5 }}>
+    <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
       {['FILTER BY STATUS', 'EXPORT LOGS'].map((label) => (
         <Button
           key={label}

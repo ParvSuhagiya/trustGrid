@@ -44,7 +44,7 @@ const MainContent = () => {
   return (
     <main className="pt-24">
       {/* ── Hero Section ── */}
-      <section className="relative min-h-[700px] flex items-center px-8 overflow-hidden">
+      <section className="relative min-h-[700px] flex items-center px-4 md:px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left copy */}
           <div className="lg:col-span-7 z-10">
@@ -114,7 +114,7 @@ const MainContent = () => {
       </section>
 
       {/* ── Feature Blocks – Bento Grid ── */}
-      <section className="py-24 px-8 bg-surface-container-lowest">
+      <section className="py-24 px-4 md:px-8 bg-surface-container-lowest">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 text-center max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold font-manrope mb-4">
@@ -151,7 +151,7 @@ const MainContent = () => {
       </section>
 
       {/* ── How It Works – Asymmetric Layout ── */}
-      <section className="py-24 px-8 overflow-hidden">
+      <section className="py-24 px-4 md:px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-start">
             {/* Sticky heading */}
@@ -189,8 +189,8 @@ const MainContent = () => {
       </section>
 
       {/* ── Final CTA Section ── */}
-      <section className="py-32 px-8">
-        <div className="max-w-7xl mx-auto rounded-3xl bg-surface-container relative overflow-hidden p-12 md:p-24 border border-[#444444]">
+      <section className="py-32 px-4 md:px-8">
+        <div className="max-w-7xl mx-auto rounded-3xl bg-surface-container relative overflow-hidden p-8 md:p-24 border border-[#444444]">
           {/* Background image overlay */}
           <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
             <img

@@ -166,7 +166,7 @@ const SupplierProfilePage = () => {
   const calculatedBudget = selectedItem && quantity ? (selectedItem.price * Number(quantity)).toFixed(2) : '0.00';
 
   return (
-    <Box sx={{ px: { xs: 3, md: 6 }, pt: 4, pb: 8, backgroundColor: '#000', minHeight: '100%', '&::-webkit-scrollbar': { width: 4 }, '&::-webkit-scrollbar-track': { background: '#000' }, '&::-webkit-scrollbar-thumb': { background: '#333', borderRadius: 10 } }}>
+    <Box sx={{ px: { xs: 2, sm: 3, md: 6 }, pt: 4, pb: 8, backgroundColor: '#000', minHeight: '100%', '&::-webkit-scrollbar': { width: 4 }, '&::-webkit-scrollbar-track': { background: '#000' }, '&::-webkit-scrollbar-thumb': { background: '#333', borderRadius: 10 } }}>
       <Button startIcon={<ArrowBackIcon sx={{ fontSize: '1rem !important' }} />} onClick={() => navigate('/buyer-dashboard/marketplace')} sx={{ color: '#CCCCCC', fontWeight: 700, textTransform: 'none', fontSize: '0.875rem', mb: 6, p: 0, minWidth: 0, '&:hover': { color: '#fff' }, transition: 'color 0.2s' }}>
         Back to Marketplace
       </Button>
@@ -177,7 +177,7 @@ const SupplierProfilePage = () => {
       <SupplierReviews insights={mockInsights} />
 
       {/* Request Dialog */}
-      <Dialog open={dialogOpen} onClose={closeDialog} PaperProps={{ sx: { backgroundColor: '#111', color: '#fff', minWidth: '400px' } }}>
+      <Dialog open={dialogOpen} onClose={closeDialog} PaperProps={{ sx: { backgroundColor: '#111', color: '#fff', width: { xs: '95vw', sm: '400px' }, maxWidth: '95vw' } }}>
         <DialogTitle sx={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700 }}>
           Order {selectedItem?.productName}
         </DialogTitle>

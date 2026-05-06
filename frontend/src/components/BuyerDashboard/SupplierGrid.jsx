@@ -324,7 +324,7 @@ const SupplierGrid = () => {
       </Box>
 
       {/* Request Dialog */}
-      <Dialog open={dialogOpen} onClose={closeDialog} PaperProps={{ sx: { backgroundColor: '#111', color: '#fff', minWidth: '400px' } }}>
+      <Dialog open={dialogOpen} onClose={closeDialog} PaperProps={{ sx: { backgroundColor: '#111', color: '#fff', width: { xs: '95vw', sm: '400px' }, maxWidth: '95vw' } }}>
         <DialogTitle sx={{ fontFamily: "'Manrope', sans-serif", fontWeight: 700 }}>
           Request Material from {selectedSupplier?.name}
         </DialogTitle>

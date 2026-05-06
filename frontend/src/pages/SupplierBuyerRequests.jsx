@@ -64,7 +64,7 @@ const SupplierBuyerRequests = () => {
   const smallRequests = requests.length > 1 ? requests.slice(1) : [];
 
   return (
-    <Box sx={{ pt: 3, pb: 6, px: 5, minHeight: '100vh', backgroundColor: '#000' }}>
+    <Box sx={{ pt: { xs: 2, md: 3 }, pb: 6, px: { xs: 2, sm: 3, md: 5 }, minHeight: '100vh', backgroundColor: '#000' }}>
       {/* Page header + queue stats */}
       <BuyerRequestsHeader />
 

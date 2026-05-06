@@ -17,7 +17,7 @@ const BuyerDashboardHome = () => {
     description: 'View your procurement metrics, spending analytics, active contracts, and smart insights — all in your TrustGrid Buyer Dashboard.',
   });
   return (
-    <Box sx={{ p: 4, pt: '32px', pb: 6, backgroundColor: '#000', minHeight: '100%' }}>
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, pt: { xs: '24px', md: '32px' }, pb: 6, backgroundColor: '#000', minHeight: '100%' }}>
       {/* Dashboard title */}
       <DashboardHeader />
 

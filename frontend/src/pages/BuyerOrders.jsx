@@ -20,7 +20,7 @@ const BuyerOrders = () => {
     description: 'Track and manage all your procurement orders on TrustGrid. View order status, delivery timelines, and supplier responses.',
   });
   return (
-  <Box sx={{ px: 4, pt: 4, pb: 8, minHeight: '100vh', position: 'relative' }}>
+  <Box sx={{ px: { xs: 2, sm: 3, md: 4 }, pt: { xs: 2, md: 4 }, pb: 8, minHeight: '100vh', position: 'relative' }}>
 
     {/* ── Page title + action buttons ── */}
     <OrdersHeader />
@@ -38,7 +38,7 @@ const BuyerOrders = () => {
     <Button
       aria-label="New request"
       sx={{
-        position: 'fixed', bottom: 32, right: 32,
+        position: 'fixed', bottom: { xs: 16, md: 32 }, right: { xs: 16, md: 32 },
         minWidth: 56, width: 56, height: 56, borderRadius: '50%',
         backgroundColor: '#fff', color: '#000',
         boxShadow: '0 10px 40px rgba(0,0,0,0.5)',

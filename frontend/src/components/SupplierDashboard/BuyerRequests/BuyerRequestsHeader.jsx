@@ -46,8 +46,10 @@ const BuyerRequestsHeader = () => (
     sx={{
       mb: 6,
       display: 'flex',
-      alignItems: 'flex-end',
+      flexDirection: { xs: 'column', md: 'row' },
+      alignItems: { xs: 'flex-start', md: 'flex-end' },
       justifyContent: 'space-between',
+      gap: 3,
     }}
   >
     {/* Left: Title block */}
@@ -69,7 +71,7 @@ const BuyerRequestsHeader = () => (
         variant="h2"
         sx={{
           fontFamily: "'Manrope', sans-serif",
-          fontSize: '3rem',
+          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
           fontWeight: 700,
           color: '#fff',
           letterSpacing: '-0.02em',
@@ -94,7 +96,7 @@ const BuyerRequestsHeader = () => (
     </Box>
 
     {/* Right: Stat boxes */}
-    <Box sx={{ display: 'flex', gap: 2 }}>
+    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', flexShrink: 0 }}>
       <StatBox label="Active Queue" value="12" />
       <StatBox label="Est. Revenue" value="$1.2M" />
     </Box>

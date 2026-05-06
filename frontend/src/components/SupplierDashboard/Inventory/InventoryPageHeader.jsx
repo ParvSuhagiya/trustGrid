@@ -51,7 +51,7 @@ const InventoryPageHeader = () => (
     </Box>
 
     {/* Stat cards */}
-    <Box sx={{ display: 'flex', gap: 2, flexShrink: 0 }}>
+    <Box sx={{ display: 'flex', gap: 2, flexShrink: 0, flexWrap: 'wrap' }}>
       {/* Total Capacity */}
       <Box
         sx={{

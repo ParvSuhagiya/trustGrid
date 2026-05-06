@@ -59,8 +59,9 @@ const RecentBuyers = () => (
     </Box>
 
     {/* Table */}
-    <Box sx={{ backgroundColor: '#000', borderRadius: '10px', border: `1px solid ${C.outline}`, overflow: 'hidden' }}>
-      <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
+    {/* Table — scrollable on mobile */}
+    <Box sx={{ backgroundColor: '#000', borderRadius: '10px', border: `1px solid ${C.outline}`, overflowX: 'auto' }}>
+      <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse', minWidth: 480 }}>
         {/* Head */}
         <Box component="thead">
           <Box component="tr" sx={{ borderBottom: `1px solid ${C.outline}`, backgroundColor: '#111111' }}>

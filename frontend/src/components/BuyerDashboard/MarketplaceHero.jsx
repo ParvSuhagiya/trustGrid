@@ -134,7 +134,7 @@ const FeaturedBentoSection = () => (
       {/* Content */}
       <Box
         sx={{
-          position: 'absolute', bottom: 0, left: 0, p: 4,
+          position: 'absolute', bottom: 0, left: 0, p: { xs: 2, md: 4 },
           width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end',
         }}
       >
@@ -165,6 +165,7 @@ const FeaturedBentoSection = () => (
             px: 3, py: 1.5, backgroundColor: '#fff', color: '#000',
             fontWeight: 700, borderRadius: '6px', textTransform: 'none',
             flexShrink: 0,
+            display: { xs: 'none', sm: 'flex' },
             '&:hover': { backgroundColor: C.accent },
           }}
         >

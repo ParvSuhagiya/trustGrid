@@ -78,8 +78,8 @@ const SupplierInventory = () => {
   return (
     <Box
       sx={{
-        px: { xs: 3, md: 5 },
-        pt: 5,
+        px: { xs: 2, sm: 3, md: 5 },
+        pt: { xs: 2, md: 5 },
         pb: 8,
         backgroundColor: '#000',
         minHeight: '100%',

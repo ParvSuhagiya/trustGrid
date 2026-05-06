@@ -37,12 +37,12 @@ const InventoryTable = ({ items: externalItems, onDelete, onEdit }) => {
           backgroundColor: '#000',
           border: `1px solid ${C.outline}`,
           borderRadius: '8px',
-          overflow: 'hidden',
+          overflowX: 'auto',
         }}
       >
         <Box
           component="table"
-          sx={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}
+          sx={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed', minWidth: 560 }}
         >
           {/* Column headers */}
           <Box component="thead">
