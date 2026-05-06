@@ -26,7 +26,7 @@ const InventoryTable = ({ items: externalItems, onDelete, onEdit }) => {
   const items = externalItems ?? INITIAL_ITEMS;
 
   return (
-    <Box component="section" sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+    <Box component="section" sx={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
 
       {/* ── Title + action buttons ── */}
       <InventoryTableToolbar />

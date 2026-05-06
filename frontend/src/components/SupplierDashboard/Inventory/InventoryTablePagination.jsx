@@ -23,12 +23,14 @@ const InventoryTablePagination = ({
 }) => (
   <Box
     sx={{
-      px: 3,
+      px: { xs: 2, sm: 3 },
       py: 2,
       borderTop: `1px solid ${C.outline}`,
       display: 'flex',
-      alignItems: 'center',
+      flexDirection: { xs: 'column', sm: 'row' },
+      alignItems: { xs: 'flex-start', sm: 'center' },
       justifyContent: 'space-between',
+      gap: 2,
       backgroundColor: '#000',
     }}
   >

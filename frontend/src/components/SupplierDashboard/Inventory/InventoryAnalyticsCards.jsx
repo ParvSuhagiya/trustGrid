@@ -28,7 +28,7 @@ const CARDS = [
  * Stock Turnover and Restock Alerts.
  */
 const InventoryAnalyticsCards = () => (
-  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3 }}>
+  <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 3 }}>
     {CARDS.map(({ label, value, badge, badgeColor, icon, iconColor }) => (
       <Box
         key={label}

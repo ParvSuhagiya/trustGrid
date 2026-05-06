@@ -105,7 +105,7 @@ const SupplierInventory = () => {
         <AddSupplyForm onAdd={handleAdd} />
 
         {/* Right: Table + analytics */}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
           <InventoryTable items={items} onDelete={handleDelete} onEdit={handleEdit} />
           <InventoryAnalyticsCards />
         </Box>
